@@ -1,0 +1,650 @@
+<!-- ============================================================
+     CAREERCOMPASS - BEAUTIFUL DASHBOARD PAGE
+     Career Domain Selection with Analysis Form
+     ============================================================ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerCompass - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root{
+            --color-a:  #0b3d91;
+            --color-b:  #041f4b;
+            --color-c:  #035aa6;
+            --color-d:  #06b6d4;
+            --color-e:  #0ea5a4;
+            --color-f:  #10b981;
+            --color-g:  #84cc16;
+            --color-h:  #f59e0b;
+            --color-i:  #f97316;
+            --color-j:  #ef4444;
+            --color-k:  #ec4899;
+            --color-l:  #8b5cf6;
+            --color-m:  #6366f1;
+            --color-n:  #60a5fa;
+            --color-o:  #3b82f6;
+            --color-p:  #2563eb;
+            --color-q:  #1e293b;
+            --color-r:  #0f172a;
+            --color-s:  #06b6d4;
+            --color-t:  #2dd4bf;
+            --color-u:  #34d399;
+            --color-v:  #fca5a5;
+            --color-w:  #fbcfe8;
+            --color-x:  #fde68a;
+            --color-y:  #ddd6fe;
+            --color-z:  #e9d5ff;
+
+            --brand-primary: var(--color-a);
+            --brand-secondary: var(--color-b);
+            --brand-accent: var(--color-d);
+            --brand-gradient-primary: linear-gradient(135deg, var(--color-d) 0%, var(--color-a) 100%);
+            --color-background: linear-gradient(135deg, #f3f7fc 0%, #e9f1fb 100%);
+
+            --career-bg: linear-gradient(135deg, var(--color-e), var(--color-d));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--color-background);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Use career gradient as navbar background */
+        .navbar {
+            background: var(--career-bg);
+            backdrop-filter: blur(6px);
+            padding: 15px 30px;
+            border-radius: 8px;
+            border: none;
+            margin-bottom: 40px;
+        }
+
+        /* Brand: no box, white text on gradient */
+        .navbar-brand {
+            background: transparent;
+            color: #ffffff !important;
+            padding: 0;
+            border-radius: 0;
+            font-weight: 700;
+            font-size: 1.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* navbar links visible on gradient */
+        .navbar .nav-link, .navbar a { color: #ffffff !important; }
+
+        .container-main {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-section {
+            /* prominent header using the peacock brand gradient */
+            background: var(--brand-gradient-primary);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+            animation: slideInUp 0.6s ease;
+        }
+
+        .header-section h1 {
+            color: white;
+            font-weight: 800;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .welcome-msg {
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* CAREER DOMAINS GRID */
+        .domains-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .domain-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            animation: slideInUp 0.6s ease;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .domain-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .domain-header {
+            background: linear-gradient(135deg, var(--brand-accent) 0%, var(--brand-primary) 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .domain-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .domain-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .domain-salary {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .domain-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .domain-description {
+            color: var(--color-r);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .domain-meta {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+        }
+
+        .meta-item {
+            color: #999;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .select-btn {
+            width: 100%;
+            padding: 10px;
+            background: var(--brand-gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .select-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 18px rgba(3,90,166,0.18);
+        }
+
+        /* ANALYSIS FORM */
+        .form-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+            margin-bottom: 40px;
+            animation: slideInUp 0.6s ease;
+        }
+
+        .form-section h2 {
+            color: var(--brand-primary);
+            font-weight: 700;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 3px rgba(14,165,164,0.08);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--brand-gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(3,90,166,0.22);
+        }
+
+        .back-btn {
+            background: white;
+            color: var(--brand-primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--brand-primary);
+            color: white;
+        }
+
+        /* ANIMATIONS */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .header-section {
+                padding: 25px;
+            }
+
+            .header-section h1 {
+                font-size: 1.8rem;
+            }
+
+            .domains-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-section {
+                padding: 25px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <div class="navbar">
+        <a class="navbar-brand" href="/dashboard">
+            <i class="fas fa-compass"></i> CareerCompass
+        </a>
+        <ul class="navbar-nav">
+            <li>
+                <a class="nav-link" href="/courses">
+                    <i class="fas fa-book"></i> Courses
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" href="/logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container-main">
+        <!-- HEADER -->
+        <div class="header-section">
+            <h1><i class="fas fa-chart-line"></i> Welcome to CareerCompass</h1>
+            <p>Hi <span class="welcome-msg">{{ user.full_name }}</span>, let's explore your career path!</p>
+        </div>
+
+        <!-- CAREER DOMAINS -->
+        <div style="margin-bottom: 40px;">
+            <h2 style="color: white; font-weight: 700; margin-bottom: 25px;">
+                <i class="fas fa-briefcase"></i> Select Your Career Domain
+            </h2>
+            <div class="domains-grid">
+                {% for key, domain in career_domains.items() %}
+                <div class="domain-card" data-domain-key="{{ key }}" onclick="selectDomain('{{ key }}', '{{ domain.name }}')">
+                    <div class="domain-header" style="background: {{ domain.color }}">
+                        <div class="domain-icon">{{ domain.icon }}</div>
+                        <div class="domain-title">{{ domain.name }}</div>
+                        <div class="domain-salary">{{ domain.entry_level }}</div>
+                    </div>
+                    <div class="domain-content">
+                        <p class="domain-description">{{ domain.description }}</p>
+                        <div class="domain-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">{{ domain.growth }}%</div>
+                                Growth
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">{{ domain.avg_job_openings }}</div>
+                                Openings
+                            </div>
+                        </div>
+
+                        <!-- Action buttons: Courses, Jobs search -->
+                        <div style="display:flex; gap:8px; justify-content:center; margin-top:10px;">
++                            <!-- Courses quick-link removed to declutter domain cards (per request) -->
+                            <a class="select-btn" target="_blank" rel="noopener" href="https://www.linkedin.com/jobs/search/?keywords={{ (domain.name ~ ' jobs') | urlencode }}" title="Search jobs for {{ domain.name }}">
+                                <i class="fas fa-briefcase"></i> Jobs
+                            </a>
+                        </div>
+
+                        <div style="margin-top:12px;">
+                            <button class="select-btn" onclick="selectDomain('{{ key }}', '{{ domain.name }}')">
+                                <i class="fas fa-arrow-right"></i> Select
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- ANALYSIS FORM -->
+        <form method="POST" action="/analyze" class="form-section" id="analyzeForm">
+            <h2>
+                <i class="fas fa-search"></i> Analyze Your Skills
+            </h2>
+
+            <!-- Inline alerts -->
+            <div id="analyzeAlert" style="display:none; margin-bottom:16px;">
+                <div id="analyzeAlertContent" class="alert alert-danger" role="alert"></div>
+            </div>
+
+            <!-- Loading state -->
+            <div id="analyzeLoading" style="display:none; margin-bottom:16px; text-align:center;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Processing...</span>
+                </div>
+                <div style="margin-top:8px; color:#333;">Analyzing — please wait...</div>
+            </div>
+
+            <div class="form-group">
+                <label for="career_goal_display">
+                    <i class="fas fa-briefcase"></i> Selected Career Domain *
+                </label>
+                <input 
+                    type="text" 
+                    id="career_goal_display" 
+                    name="career_goal_display"
+                    placeholder="Select a domain from above or type a domain name"
+                    style="background: #f8f9fa;"
+                >
+                <!-- Hidden input for the actual domain key (server resolves display text too) -->
+                <input 
+                    type="hidden" 
+                    id="career_goal" 
+                    name="career_goal"
+                >
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="skills">
+                        <i class="fas fa-code"></i> Your Skills (comma-separated) *
+                    </label>
+                    <textarea 
+                        id="skills" 
+                        name="skills" 
+                        rows="4"
+                        placeholder="e.g., python, machine learning, sql, linux"
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="cgpa">
+                        <i class="fas fa-graduation-cap"></i> Your CGPA/Grade *
+                    </label>
+                    <input 
+                        type="number" 
+                        id="cgpa" 
+                        name="cgpa" 
+                        min="0" 
+                        max="10" 
+                        step="0.1"
+                        placeholder="e.g., 8.5"
+                        required
+                    >
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="analyzeSubmit">
+                <i class="fas fa-rocket"></i> Analyze Now
+            </button>
+        </form>
+    </div>
+
+    <script>
+        function selectDomain(domainKey, domainName) {
+            // Set the display name in the visible field
+            document.getElementById('career_goal_display').value = domainName;
+            // Set the domain key in the hidden field
+            document.getElementById('career_goal').value = domainKey;
+            // Scroll to form
+            document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('skills').focus();
+        }
+
+        // Copy editable display input into hidden career_goal before submit (so server gets something)
+        (function(){
+            const form = document.querySelector('form.form-section');
+            if (form) {
+                form.addEventListener('submit', function(e){
+                    const display = document.getElementById('career_goal_display').value || '';
+                    const hidden = document.getElementById('career_goal');
+                    // If user selected a domain card earlier, hidden already has a key.
+                    // Otherwise copy display text so server can attempt to resolve it.
+                    if (!hidden.value || hidden.value.trim() === '') {
+                        hidden.value = display.trim();
+                    }
+                    // also always update hidden with normalized value if user typed something like "AI & ML"
+                    // (server has robust resolver, so we keep raw text)
+                });
+                // If user edits display after selecting, clear hidden key so server uses text
+                document.getElementById('career_goal_display').addEventListener('input', function(){
+                    document.getElementById('career_goal').value = '';
+                });
+            }
+        })();
+
+        // Enhanced analyze form submit with client-side validation and fetch
+        (function(){
+            const form = document.getElementById('analyzeForm');
+            const alertWrap = document.getElementById('analyzeAlert');
+            const alertContent = document.getElementById('analyzeAlertContent');
+            const loading = document.getElementById('analyzeLoading');
+            const submitBtn = document.getElementById('analyzeSubmit');
+
+            function showAlert(message, type='danger') {
+                alertContent.className = `alert alert-${type}`;
+                alertContent.textContent = message;
+                alertWrap.style.display = 'block';
+            }
+            function hideAlert() {
+                alertWrap.style.display = 'none';
+                alertContent.textContent = '';
+            }
+            function showLoading() {
+                loading.style.display = 'block';
+                submitBtn.disabled = true;
+            }
+            function hideLoading() {
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    hideAlert();
+
+                    const skills = document.getElementById('skills').value.trim();
+                    const cgpaEl = document.getElementById('cgpa');
+                    const cgpa = cgpaEl.value;
+                    const careerDisplay = document.getElementById('career_goal_display').value.trim();
+                    const careerHidden = document.getElementById('career_goal');
+
+                    // Basic client-side validation
+                    if (!skills) {
+                        showAlert('Please enter your skills (comma-separated).');
+                        return;
+                    }
+                    if (cgpa === '' || isNaN(parseFloat(cgpa))) {
+                        showAlert('Please enter a valid CGPA (0-10).');
+                        return;
+                    }
+                    const numericCgpa = parseFloat(cgpa);
+                    if (numericCgpa < 0 || numericCgpa > 10) {
+                        showAlert('CGPA must be between 0 and 10.');
+                        return;
+                    }
+
+                    // Ensure career field is set (either hidden key or typed display)
+                    if (!careerHidden.value || careerHidden.value.trim() === '') {
+                        // copy display (may be resolved server-side)
+                        careerHidden.value = careerDisplay;
+                    }
+
+                    // Prepare form data
+                    const fd = new FormData(form);
+
+                    try {
+                        showLoading();
+                        const res = await fetch(form.action, {
+                            method: 'POST',
+                            body: fd,
+                            credentials: 'same-origin',
+                        });
+
+                        const contentType = res.headers.get('content-type') || '';
+
+                        // If server returned JSON (likely error), show message
+                        if (contentType.includes('application/json')) {
+                            const json = await res.json();
+                            if (!res.ok) {
+                                // Show 'detail' or the whole JSON if no detail
+                                const detail = json.detail || JSON.stringify(json);
+                                showAlert(detail, 'danger');
+                            } else {
+                                // success JSON — may include redirect info
+                                showAlert(json.message || 'Analysis completed', 'success');
+                                // If there's a redirect URL, navigate
+                                if (json.redirect) {
+                                    window.location.href = json.redirect;
+                                }
+                            }
+                            return;
+                        }
+
+                        // If HTML returned (template), replace current document content to show results
+                        if (contentType.includes('text/html')) {
+                            const text = await res.text();
+                            // If server responded with error status, open in new tab for debugging
+                            if (!res.ok) {
+                                const w = window.open('', '_blank');
+                                if (w) {
+                                    w.document.open();
+                                    w.document.write(text);
+                                    w.document.close();
+                                } else {
+                                    showAlert('Server error — could not open debug window. Check server logs.', 'danger');
+                                }
+                            } else {
+                                // Success: replace page content
+                                document.open();
+                                document.write(text);
+                                document.close();
+                            }
+                            return;
+                        }
+
+                        // Fallback for other content types
+                        if (!res.ok) {
+                            showAlert(`Server error: ${res.status} ${res.statusText}`, 'danger');
+                        } else {
+                            showAlert('Analysis completed — check your dashboard or results.', 'success');
+                        }
+                    } catch (err) {
+                        console.error('Analyze request failed', err);
+                        showAlert('Network or server error. Check server logs for details.', 'danger');
+                    } finally {
+                        hideLoading();
+                    }
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

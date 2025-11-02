@@ -1,0 +1,690 @@
+<!-- ============================================================================
+     CAREERCOMPASS - ADVANCED COURSES WITH SMART RECOMMENDATIONS
+     Version: 11.0.0 - Beautiful Enterprise Design
+     ============================================================================ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerCompass - Courses & Pricing</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Navy core theme variables */
+        :root{
+            /* A–Z palette */
+            --color-a:  #0b3d91;
+            --color-b:  #041f4b;
+            --color-c:  #035aa6;
+            --color-d:  #06b6d4;
+            --color-e:  #0ea5a4;
+            --color-f:  #10b981;
+            --color-g:  #84cc16;
+            --color-h:  #f59e0b;
+            --color-i:  #f97316;
+            --color-j:  #ef4444;
+            --color-k:  #ec4899;
+            --color-l:  #8b5cf6;
+            --color-m:  #6366f1;
+            --color-n:  #60a5fa;
+            --color-o:  #3b82f6;
+            --color-p:  #2563eb;
+            --color-q:  #1e293b;
+            --color-r:  #0f172a;
+            --color-s:  #06b6d4;
+            --color-t:  #2dd4bf;
+            --color-u:  #34d399;
+            --color-v:  #fca5a5;
+            --color-w:  #fbcfe8;
+            --color-x:  #fde68a;
+            --color-y:  #ddd6fe;
+            --color-z:  #e9d5ff;
+
+            /* theme variables mapped to A..Z */
+            --brand-primary: var(--color-a);
+            --brand-secondary: var(--color-b);
+            --brand-accent: var(--color-d);
+            --brand-gradient-primary: linear-gradient(135deg, var(--color-d) 0%, var(--color-a) 100%);
+            --brand-gradient-secondary: linear-gradient(135deg, var(--color-a) 0%, var(--color-b) 100%);
+            --brand-text-muted: var(--color-r);
+            --brand-focus: 0 0 0 0.2rem rgba(3,90,166,0.12);
+            --color-primary: var(--brand-primary);
+            --color-accent: var(--brand-accent);
+            --color-background: linear-gradient(135deg, #f3f7fc 0%, #e9f1fb 100%);
+            --career-bg: linear-gradient(135deg, var(--color-e), var(--color-d)); /* CareerCompass box bg */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: var(--color-background);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .navbar {
+            background: var(--career-bg);
+            backdrop-filter: blur(6px);
+            padding: 15px 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: none;
+            color: #fff;
+        }
+
+        .navbar-brand {
+            background: transparent;
+            color: #ffffff;
+            padding: 0;
+            border-radius: 0;
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link, .navbar a {
+            color: #ffffff !important;
+        }
+
+        .container-main {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* FILTERS */
+        .filter-section {
+            /* softer, slightly tinted background to avoid all-white look */
+            background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,255,255,0.95));
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .filter-group label {
+            display: block;
+            color: var(--brand-primary);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: var(--brand-primary);
+            box-shadow: var(--brand-focus);
+        }
+
+        .filter-btn {
+            align-self: flex-end;
+            background: var(--brand-gradient-primary);
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(14,165,164,0.18);
+        }
+
+        /* STATS */
+        .stats-bar {
+            /* gentle tint */
+            background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,255,0.96));
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .stat-value {
+            color: var(--brand-primary);
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* COURSE GRID */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            animation: slideInUp 0.5s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .course-header {
+            background: var(--brand-gradient-primary);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ffc107;
+            color: #333;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .course-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .course-platform {
+            background: rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+        }
+
+        .course-body {
+            padding: 20px;
+        }
+
+        .course-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #ffc107;
+            font-weight: 600;
+        }
+
+        .course-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .course-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .course-price-box {
+            background: var(--brand-gradient-primary);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .course-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .course-price-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .course-level {
+            display: inline-block;
+            background: #e6fffa; /* subtle teal tint */
+            color: var(--brand-primary);
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .course-cert {
+            display: inline-block;
+            background: #c8e6c9;
+            color: #2e7d32;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .course-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .skill-tag {
+            background: #f0fdfa;
+            color: var(--brand-primary);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .course-footer {
+            display: flex;
+            gap: 10px;
+        }
+
+        .enroll-btn {
+            flex: 1;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .enroll-btn:hover {
+            transform: scale(1.05);
+            text-decoration: none;
+            color: white;
+        }
+
+        .compare-btn {
+            background: #f0f4f3;
+            color: var(--brand-primary);
+            border: 2px solid var(--brand-primary);
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .compare-btn:hover {
+            background: var(--brand-primary);
+            color: white;
+        }
+
+        /* COMPARISON TABLE */
+        .comparison-section {
+            background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,249,255,0.96));
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
+        }
+
+        .comparison-section h3 {
+            color: #fff;
+            background: var(--career-bg);
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 8px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table thead {
+            background: var(--brand-gradient-primary);
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* ANIMATIONS */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .best-price {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+        }
+
+        .best-rating {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .filter-section {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 10px;
+            }
+        }
+
+        .back-btn {
+            background: white;
+            color: var(--brand-primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+
+        .back-btn:hover {
+            background: var(--brand-primary);
+            color: white;
+        }
+
+        /* replace teal headings used inline previously */
+        .comparison-section h3 {
+            color: var(--brand-primary); margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="navbar-brand">
+                <i class="fas fa-book"></i> CareerCompass Courses
+            </div>
+            <div>
+                <span style="color: white; margin-right: 20px;">{{ total_courses }} Courses Available</span>
+                <a href="/logout" style="color: white; text-decoration: none; font-weight: 600;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container-main">
+        <!-- BACK BUTTON -->
+        <button class="back-btn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i> Go Back
+        </button>
+
+        <!-- FILTERS -->
+        <div class="filter-section">
+            <div class="filter-group">
+                <label><i class="fas fa-filter"></i> Platform</label>
+                <select id="platformFilter" onchange="filterCourses()">
+                    <option value="">All Platforms</option>
+                    <option value="Udemy">Udemy</option>
+                    <option value="Coursera">Coursera</option>
+                    <option value="Pluralsight">Pluralsight</option>
+                    <option value="LinkedIn Learning">LinkedIn Learning</option>
+                    <option value="edX">edX</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label><i class="fas fa-graduation-cap"></i> Level</label>
+                <select id="levelFilter" onchange="filterCourses()">
+                    <option value="">All Levels</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label><i class="fas fa-rupee-sign"></i> Max Price</label>
+                <input type="number" id="maxPrice" placeholder="Max Price (₹)" value="10000" onchange="filterCourses()">
+            </div>
+
+            <button class="filter-btn" onclick="resetFilters()">
+                <i class="fas fa-redo"></i> Reset
+            </button>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value" id="totalCourses">{{ total_courses }}</div>
+                <div class="stat-label">Total Courses</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">4.8</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">₹399</div>
+                <div class="stat-label">Lowest Price</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">₹12,999</div>
+                <div class="stat-label">Premium Course</div>
+            </div>
+        </div>
+
+        <!-- COURSES GRID -->
+        <div class="courses-grid" id="coursesGrid">
+            {% for course in courses %}
+            <div class="course-card" data-platform="{{ course.platform }}" data-level="{{ course.level }}" data-price="{{ course.price }}">
+                <div class="course-header">
+                    {% if course.recommendation_score > 80 %}
+                    <div class="course-badge">⭐ BEST</div>
+                    {% elif course.price < 2000 %}
+                    <div class="course-badge">💰 BUDGET</div>
+                    {% endif %}
+                    <div class="course-title">{{ course.title }}</div>
+                    <div class="course-platform">{{ course.platform }}</div>
+                </div>
+
+                <div class="course-body">
+                    <div class="course-rating">
+                        {% for i in range(course.rating | int) %}
+                        <i class="fas fa-star"></i>
+                        {% endfor %}
+                        <span style="color: #666;">({{ course.rating }}/5)</span>
+                    </div>
+
+                    <div class="course-meta">
+                        <span><i class="fas fa-users"></i> {{ course.students }}</span>
+                        <span><i class="fas fa-clock"></i> {{ course.duration }}</span>
+                    </div>
+
+                    <div class="course-price-box">
+                        <div class="course-price">₹{{ course.price }}</div>
+                        <div class="course-price-label">One-Time Payment</div>
+                    </div>
+
+                    <div>
+                        <span class="course-level">{{ course.level }}</span>
+                        {% if course.certificate %}
+                        <span class="course-cert">
+                            <i class="fas fa-certificate"></i> Certificate
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    <div class="course-skills">
+                        {% for skill in course.skills[:3] %}
+                        <span class="skill-tag">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="course-footer">
+                        <a href="{{ course.url }}" target="_blank" class="enroll-btn">
+                            <i class="fas fa-graduation-cap"></i> Enroll Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- COMPARISON TABLE -->
+        <div class="comparison-section">
+            <h3 style="color: var(--brand-primary); margin-bottom: 25px;">
+                <i class="fas fa-table"></i> Price & Platform Comparison
+            </h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Course Title</th>
+                        <th>Platform</th>
+                        <th>Price (₹)</th>
+                        <th>Duration</th>
+                        <th>Rating</th>
+                        <th>Level</th>
+                        <th>Students</th>
+                        <th>Certificate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in courses %}
+                    <tr class="{% if course.price < 2000 %}best-price{% elif course.rating >= 4.8 %}best-rating{% endif %}">
+                        <td><strong>{{ course.title[:40] }}...</strong></td>
+                        <td>{{ course.platform }}</td>
+                        <td style="color: var(--brand-primary); font-weight: 700;">₹{{ course.price }}</td>
+                        <td>{{ course.duration }}</td>
+                        <td>
+                            <i class="fas fa-star" style="color: #ffc107;"></i> {{ course.rating }}
+                        </td>
+                        <td>
+                            <span style="background: #e3f2fd; color: #667eea; padding: 5px 10px; border-radius: 5px;">
+                                {{ course.level }}
+                            </span>
+                        </td>
+                        <td>{{ course.students }}</td>
+                        <td>
+                            {% if course.certificate %}
+                            <i class="fas fa-check" style="color: #28a745; font-weight: 700;"></i>
+                            {% else %}
+                            <i class="fas fa-times" style="color: #dc3545;"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function filterCourses() {
+            const platform = document.getElementById('platformFilter').value.toLowerCase();
+            const level = document.getElementById('levelFilter').value.toLowerCase();
+            const maxPrice = parseInt(document.getElementById('maxPrice').value) || 999999;
+            const cards = document.querySelectorAll('.course-card');
+
+            cards.forEach(card => {
+                const cardPlatform = card.getAttribute('data-platform').toLowerCase();
+                const cardLevel = card.getAttribute('data-level').toLowerCase();
+                const cardPrice = parseInt(card.getAttribute('data-price'));
+
+                const platformMatch = !platform || cardPlatform.includes(platform);
+                const levelMatch = !level || cardLevel === level;
+                const priceMatch = cardPrice <= maxPrice;
+
+                card.style.display = platformMatch && levelMatch && priceMatch ? 'block' : 'none';
+            });
+        }
+
+        function resetFilters() {
+            document.getElementById('platformFilter').value = '';
+            document.getElementById('levelFilter').value = '';
+            document.getElementById('maxPrice').value = '10000';
+            filterCourses();
+        }
+    </script>
+</body>
+</html>

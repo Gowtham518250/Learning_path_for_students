@@ -1,0 +1,1011 @@
+<!-- ============================================================
+     CAREERCOMPASS - PREMIUM VISUALIZATIONS RESULTS PAGE
+     Version 8.0.0 - Excellent Visuals with Chart.js
+     ============================================================ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerCompass - Advanced Visualization Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <style>
+        :root{
+            --color-a:  #0b3d91;
+            --color-b:  #041f4b;
+            --color-c:  #035aa6;
+            --color-d:  #06b6d4;
+            --color-e:  #0ea5a4;
+            --color-f:  #10b981;
+            --color-g:  #84cc16;
+            --color-h:  #f59e0b;
+            --color-i:  #f97316;
+            --color-j:  #ef4444;
+            --color-k:  #ec4899;
+            --color-l:  #8b5cf6;
+            --color-m:  #6366f1;
+            --color-n:  #60a5fa;
+            --color-o:  #3b82f6;
+            --color-p:  #2563eb;
+            --color-q:  #1e293b;
+            --color-r:  #0f172a;
+            --color-s:  #06b6d4;
+            --color-t:  #2dd4bf;
+            --color-u:  #34d399;
+            --color-v:  #fca5a5;
+            --color-w:  #fbcfe8;
+            --color-x:  #fde68a;
+            --color-y:  #ddd6fe;
+            --color-z:  #e9d5ff;
+
+            --brand-primary: var(--color-a);
+            --brand-secondary: var(--color-b);
+            --brand-accent: var(--color-d);
+            --brand-gradient-primary: linear-gradient(135deg, var(--color-d) 0%, var(--color-a) 100%);
+            --gradient-secondary: linear-gradient(135deg, var(--color-a) 0%, var(--color-b) 100%);
+            --color-background: linear-gradient(135deg, #f3f7fc 0%, #e9f1fb 100%);
+            --career-bg: linear-gradient(135deg, var(--color-e), var(--color-d));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--color-background);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+
+        /* full-header background */
+        .navbar {
+            background: var(--career-bg);
+            backdrop-filter: blur(6px);
+            padding: 15px 30px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        /* CareerCompass boxed brand */
+        .navbar-brand {
+            background: transparent;
+            color: #ffffff !important;
+            padding: 0;
+            border-radius: 0;
+            font-weight: 700;
+            font-size: 1.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navbar .nav-link, .navbar a { color: #ffffff !important; }
+
+        .container-main {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .header-card {
+            background: var(--career-bg);
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+            margin-bottom: 40px;
+            animation: slideInUp 0.6s ease;
+        }
+
+        .header-card h1 {
+            color: var(--brand-primary);
+            font-weight: 800;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .header-card p {
+            color: #ffffff !important;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        /* KEY METRICS */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .metric-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            animation: slideInUp 0.6s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .metric-card:hover::before {
+            left: 100%;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .metric-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            color: #666;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-icon {
+            font-size: 2rem;
+            color: var(--brand-primary);
+            margin-bottom: 10px;
+        }
+
+        /* TAB NAVIGATION */
+        .tab-container {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            margin-bottom: 40px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            border-bottom: 3px solid rgba(14,165,164,0.06);
+            background: #fafbfc;
+        }
+
+        .nav-link {
+            flex: 1;
+            padding: 20px 25px;
+            border: none;
+            color: #999;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            text-align: center;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--brand-primary);
+            background: rgba(3,90,166,0.05);
+        }
+
+        .nav-link.active {
+            color: var(--brand-primary);
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .tab-content-wrapper {
+            padding: 40px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        /* CHARTS */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .chart-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            animation: slideInUp 0.6s ease;
+        }
+
+        .chart-card h3 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chart-card h3 i {
+            color: var(--brand-primary);
+        }
+
+        canvas {
+            max-height: 350px;
+        }
+
+        /* SKILL VISUALIZATION */
+        .skills-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .skills-section {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .skills-section h3 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateX(10px);
+            background: #f0f4ff;
+        }
+
+        .skill-item.have {
+            border-left: 4px solid #16a34a;
+        }
+
+        .skill-item.need {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .skill-item i {
+            font-size: 1.3rem;
+            margin-right: 12px;
+            width: 25px;
+        }
+
+        .skill-item.have i { color: #4bb543; }
+        .skill-item.need i { color: #ffc107; }
+
+        .skill-name {
+            flex: 1;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* PROGRESS BARS */
+        .progress-container {
+            margin: 30px 0;
+        }
+
+        .progress-item {
+            margin-bottom: 25px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .progress-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .progress-percent {
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .progress {
+            height: 12px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* INFO CARDS */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .info-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            animation: slideInUp 0.6s ease;
+        }
+
+        .info-card h4 {
+            color: var(--brand-primary);
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .info-card p {
+            color: #666;
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .info-card strong {
+            color: #333;
+        }
+
+        /* ROADMAP */
+        .roadmap {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin: 30px 0;
+        }
+
+        .roadmap-steps {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin: 30px 0;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            animation: slideInUp 0.6s ease;
+        }
+
+        .step-circle {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .step:hover .step-circle {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        .step-label {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .step-time {
+            color: #999;
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        /* BUTTONS */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+
+        .btn-action {
+            padding: 14px 35px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-secondary {
+            color: var(--brand-primary);
+            border: 2px solid var(--brand-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--brand-primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* ANIMATIONS */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-showcase {
+                grid-template-columns: 1fr;
+            }
+
+            .roadmap-steps {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-card {
+                padding: 25px;
+            }
+
+            .header-card h1 {
+                font-size: 1.8rem;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+
+            .nav-link {
+                flex: auto;
+                padding: 15px 20px;
+            }
+
+            .tab-content-wrapper {
+                padding: 20px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <a class="navbar-brand" href="/dashboard">
+            <i class="fas fa-compass"></i> CareerCompass
+        </a>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container-main">
+        <!-- HEADER -->
+        <div class="header-card">
+            <h1>🎯 Your Career Analysis</h1>
+            <p>Complete insights for <strong>{{ career_domain.name if career_domain else 'Selected Domain' }}</strong></p>
+            {% if suggested_domain_name %}
+                <p style="margin-top:8px; color:#444;">
+                    Suggested best-fit domain based on your current skills:
+                    <strong style="color:#667eea;">{{ suggested_domain_name }}</strong>
+                    {% if suggested_domain_score is not none %} (match tokens: {{ suggested_domain_score }}){% endif %}
+                </p>
+            {% endif %}
+        </div>
+
+        <!-- KEY METRICS -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon"><i class="fas fa-chart-pie"></i></div>
+                <div class="metric-value">{{ skill_analysis.adjusted_match | round(0) | int }}%</div>
+                <div class="metric-label">Job Readiness</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon"><i class="fas fa-check-circle"></i></div>
+                <div class="metric-value">{{ skill_analysis.skills_count.have }}</div>
+                <div class="metric-label">Current Skills</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon"><i class="fas fa-book"></i></div>
+                <div class="metric-value">{{ skill_analysis.skills_count.need }}</div>
+                <div class="metric-label">To Learn</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon"><i class="fas fa-briefcase"></i></div>
+                <div class="metric-value">{{ skill_analysis.domain_info.avg_job_openings }}</div>
+                <div class="metric-label">Job Openings</div>
+            </div>
+        </div>
+
+        <!-- TABS -->
+        <div class="tab-container">
+            <div class="nav-tabs" role="tablist">
+                <button class="nav-link active" onclick="switchTab('overview')">
+                    <i class="fas fa-eye"></i> Overview
+                </button>
+                <button class="nav-link" onclick="switchTab('skills')">
+                    <i class="fas fa-code"></i> Skills
+                </button>
+                <button class="nav-link" onclick="switchTab('market')">
+                    <i class="fas fa-chart-line"></i> Market
+                </button>
+                <button class="nav-link" onclick="switchTab('roadmap')">
+                    <i class="fas fa-map"></i> Roadmap
+                </button>
+            </div>
+
+            <!-- TAB 1: OVERVIEW -->
+            <div class="tab-content-wrapper" id="overview">
+                <h2 style="color: #667eea; margin-bottom: 20px;">📊 Readiness Assessment</h2>
+
+                <div style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%); border-left: 4px solid #667eea; padding: 20px; border-radius: 12px; margin-bottom: 30px;">
+                    <p style="margin: 8px 0;"><strong style="color: #667eea;">Status:</strong> <span style="font-size: 1.2rem; color: #333;">{{ skill_analysis.readiness_level }}</span></p>
+                    <p style="margin: 8px 0;"><strong style="color: #667eea;">Timeline:</strong> {{ skill_analysis.estimated_timeline }}</p>
+                    <p style="margin: 8px 0;"><strong style="color: #667eea;">Next Step:</strong> {{ skill_analysis.action_required }}</p>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3><i class="fas fa-chart-doughnut"></i> Skill Distribution</h3>
+                        <canvas id="skillChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3><i class="fas fa-chart-bar"></i> Readiness Score</h3>
+                        <canvas id="readinessChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h4>💼 Salary Range</h4>
+                        <p><strong>Entry:</strong> {{ skill_analysis.salary_info.entry_level }}</p>
+                        <p><strong>Mid:</strong> {{ skill_analysis.salary_info.mid_level }}</p>
+                        <p><strong>Senior:</strong> {{ skill_analysis.salary_info.senior_level }}</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>🏢 Market Info</h4>
+                        <p><strong>Growth:</strong> {{ skill_analysis.domain_info.growth_potential }}% YoY</p>
+                        <p><strong>Competition:</strong> {{ skill_analysis.domain_info.competition }}</p>
+                        <p><strong>Openings:</strong> {{ skill_analysis.domain_info.avg_job_openings }}/month</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>🎓 Category</h4>
+                        <p><strong>Domain:</strong> {{ skill_analysis.domain_info.category }}</p>
+                        <p><strong>Level:</strong> Professional</p>
+                        <p><strong>Demand:</strong> High</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: SKILLS -->
+            <div class="tab-content-wrapper" id="skills" style="display: none;">
+                <h2 style="color: #667eea; margin-bottom: 20px;">🛠️ Skills Analysis</h2>
+
+                <div class="skills-showcase">
+                    <div class="skills-section">
+                        <h3><i class="fas fa-check" style="color: #4bb543;"></i> Your Current Skills</h3>
+                        {% for skill in skill_analysis.matched_skills %}
+                            <div class="skill-item have">
+                                <i class="fas fa-check"></i>
+                                <span class="skill-name">{{ skill }}</span>
+                            </div>
+                        {% else %}
+                            <p style="color: #999;">No matching skills yet</p>
+                        {% endfor %}
+                    </div>
+
+                    <div class="skills-section">
+                        <h3><i class="fas fa-star" style="color: #ffc107;"></i> Skills to Learn</h3>
+                        {% for skill in skill_analysis.missing_skills %}
+                            <div class="skill-item need" style="display:flex; align-items:center; justify-content:space-between;">
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <i class="fas fa-plus"></i>
+                                    <span class="skill-name">{{ skill }}</span>
+                                </div>
+                                <div style="display:flex; gap:8px; align-items:center;">
+                                    <a class="btn btn-sm btn-outline-primary" href="/course_comparision?skill={{ skill | urlencode }}" title="Compare courses for {{ skill }}">
+                                        <i class="fas fa-search"></i> Compare
+                                    </a>
+                                    <a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="https://www.linkedin.com/search/results/content/?keywords={{ skill | urlencode }}" title="LinkedIn posts for {{ skill }}">
+                                        <i class="fab fa-linkedin"></i> LinkedIn
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- recommended courses for this missing skill -->
+                            {% set courses_for_skill = skill_course_map.get(skill, []) %}
+                            {% if courses_for_skill %}
+                                <div style="margin:8px 0 18px 0;">
+                                    <small style="color:#666; font-weight:600;">Top courses to learn "{{ skill }}"</small>
+                                    <div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap;">
+                                        {% for c in courses_for_skill %}
+                                            <a href="{{ c.url }}" target="_blank" rel="noopener" class="btn btn-sm btn-light" style="border:1px solid #e9ecef;">
+                                                <strong style="color:#333;">{{ c.title }}</strong>
+                                                <div style="font-size:0.8rem; color:#666;">{{ c.platform }} · ₹{{ c.price }}</div>
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <p style="color: #999;">All skills covered!</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="chart-card" style="margin-top: 30px;">
+                    <h3><i class="fas fa-chart-line"></i> Skill Coverage Progress</h3>
+                    <div class="progress-container">
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-label">Technical Skills Coverage</span>
+                                <span class="progress-percent">{{ skill_analysis.match_percentage | round(0) | int }}%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: {{ skill_analysis.match_percentage }}%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-label">Job Readiness (with CGPA)</span>
+                                <span class="progress-percent">{{ skill_analysis.adjusted_match | round(0) | int }}%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: {{ skill_analysis.adjusted_match }}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: MARKET -->
+            <div class="tab-content-wrapper" id="market" style="display: none;">
+                <h2 style="color: #667eea; margin-bottom: 20px;">📈 Market Analysis</h2>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3><i class="fas fa-chart-line"></i> Market Size vs Competition</h3>
+                        <canvas id="marketChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3><i class="fas fa-building"></i> Top Companies</h3>
+                        <canvas id="companiesChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h4>📊 Market Size</h4>
+                        <p style="font-size: 2rem; color: #667eea; font-weight: 700;">{{ skill_analysis.domain_info.avg_job_openings }}+</p>
+                        <p style="color: #999;">Job openings per month</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>🚀 Growth Rate</h4>
+                        <p style="font-size: 2rem; color: #4bb543; font-weight: 700;">{{ skill_analysis.domain_info.growth_potential }}%</p>
+                        <p style="color: #999;">Year-over-year growth</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>🏆 Top Employers</h4>
+                        {% for company in skill_analysis.domain_info.top_companies[:4] %}
+                            <p>✓ {{ company }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: ROADMAP -->
+            <div class="tab-content-wrapper" id="roadmap" style="display: none;">
+                <h2 style="color: #667eea; margin-bottom: 20px;">🗺️ Your Learning Journey</h2>
+
+                <div class="roadmap">
+                    <div class="roadmap-steps" style="flex-direction:column; gap:18px;">
+                        {% set level_order = ['Foundation','Core','Advanced'] %}
+                        {% for level in level_order %}
+                            <div class="step" style="display:block; padding:18px; border-radius:12px; background:#fff;">
+                                <div class="step-circle" style="width:56px; height:56px; font-size:1.1rem;">{{ loop.index }}</div>
+                                 <div style="display:flex; justify-content:space-between; align-items:center;">
+                                     <div>
+                                         <div class="step-label" style="font-size:1.05rem; font-weight:700;">{{ level }}</div>
+                                        <div class="step-time" style="color:#999;">{{ ['Month 1-2','Month 3-6','Month 6-12'][loop.index0] }}</div>
+                                     </div>
+                                     <div style="text-align:right;">
+                                         <div style="font-weight:600; color:#667eea;">Skills to Learn ({{ level_roadmap[level]|length }})</div>
+                                         {% for sk in level_roadmap[level] %}
+                                             <div style="margin-top:6px;">
+                                                 <span class="skill-item need" style="display:inline-block; padding:6px 10px; border-radius:8px; background:#fff3cd; color:#8a6d3b; border:1px solid #ffe8a6;">
+                                                     {{ sk }}
+                                                 </span>
+                                                 <!-- quick link to courses for this skill -->
+                                                 {% if skill_course_map.get(sk) %}
+                                                     <a href="{{ skill_course_map[sk][0].url }}" target="_blank" style="margin-left:8px; font-size:0.85rem;">Best course</a>
+                                                 {% else %}
+                                                     <a href="/course_comparision?skill={{ sk | urlencode }}" style="margin-left:8px; font-size:0.85rem;">Find courses</a>
+                                                 {% endif %}
+                                             </div>
+                                         {% endfor %}
+                                     </div>
+                                 </div>
+                             </div>
+                        {% endfor %}
+                     </div>
+                 </div>
+
+                <div style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%); padding: 25px; border-radius: 12px; border-left: 4px solid #667eea; margin-top:16px;">
+                    <h4 style="color: #667eea; margin-bottom: 15px;">🎯 Portfolio Projects</h4>
+                    {% for project in skill_analysis.domain_info.required_projects %}
+                        <p style="margin: 8px 0;"><strong>{{ loop.index }}.</strong> {{ project }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="action-buttons">
+            <a href="/dashboard" class="btn-action btn-secondary">
+                <i class="fas fa-arrow-left"></i> New Analysis
+            </a>
+            <button class="btn-action btn-primary" onclick="downloadReport()">
+                <i class="fas fa-download"></i> Download Report
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content-wrapper').forEach(tab => tab.style.display = 'none');
+            document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName).style.display = 'block';
+            event.target.classList.add('active');
+        }
+
+        // Skill Chart
+        const skillCtx = document.getElementById('skillChart');
+        if (skillCtx) {
+            new Chart(skillCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Skills You Have', 'Skills to Learn'],
+                    datasets: [{
+                        data: [{{ skill_analysis.skills_count.have }}, {{ skill_analysis.skills_count.need }}],
+                        backgroundColor: ['#4bb543', '#ffc107'],
+                        borderColor: ['#fff', '#fff'],
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { padding: 20, font: { size: 12, weight: 600 } } },
+                        datalabels: { color: '#fff', font: { weight: 'bold' } }
+                    }
+                }
+            });
+        }
+
+        // Readiness Chart
+        const readinessCtx = document.getElementById('readinessChart');
+        if (readinessCtx) {
+            new Chart(readinessCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Job Readiness'],
+                    datasets: [{
+                        label: 'Score',
+                        data: [{{ skill_analysis.adjusted_match }}],
+                        backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                        borderColor: '#667eea',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        x: { max: 100, ticks: { callback: v => v + '%' } }
+                    },
+                    plugins: {
+                        legend: { display: true, labels: { font: { size: 12, weight: 600 } } }
+                    }
+                }
+            });
+        }
+
+        // Market Chart
+        const marketCtx = document.getElementById('marketChart');
+        if (marketCtx) {
+            new Chart(marketCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Market Size', 'Competition Level'],
+                    datasets: [{
+                        label: 'Score',
+                        data: [{{ skill_analysis.domain_info.avg_job_openings // 10 }}, {{ {'Low': 30, 'Low-Medium': 50, 'Medium': 60, 'Medium-High': 75, 'High': 85, 'Very High': 95}.get(skill_analysis.domain_info.competition, 50) }}],
+                        backgroundColor: ['#667eea', '#764ba2'],
+                        borderRadius: 8,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: { y: { beginAtZero: true } },
+                    plugins: { legend: { display: true, labels: { font: { size: 12, weight: 600 } } } }
+                }
+            });
+        }
+
+        // Companies Chart
+        const companiesCtx = document.getElementById('companiesChart');
+        if (companiesCtx) {
+            const companies = {{ skill_analysis.domain_info.top_companies | tojson }};
+            new Chart(companiesCtx, {
+                type: 'radar',
+                data: {
+                    labels: companies.slice(0, 5),
+                    datasets: [{
+                        label: 'Hiring Activity',
+                        data: [85, 90, 88, 92, 87],
+                        backgroundColor: 'rgba(102, 126, 234, 0.3)',
+                        borderColor: '#667eea',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#667eea'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: { legend: { labels: { font: { size: 12, weight: 600 } } } },
+                    scales: { r: { beginAtZero: true, max: 100 } }
+                }
+            });
+        }
+
+        // Download Report
+        function downloadReport() {
+            const report = {
+                domain: '{{ career_domain.name if career_domain else "Selected Domain" }}',
+                readiness: {{ skill_analysis.adjusted_match | round(0) | int }},
+                skills_have: {{ skill_analysis.skills_count.have }},
+                skills_need: {{ skill_analysis.skills_count.need }},
+                matched_skills: {{ skill_analysis.matched_skills | tojson }},
+                missing_skills: {{ skill_analysis.missing_skills | tojson }},
+                salary: {
+                    entry: '{{ skill_analysis.salary_info.entry_level }}',
+                    mid: '{{ skill_analysis.salary_info.mid_level }}',
+                    senior: '{{ skill_analysis.salary_info.senior_level }}'
+                },
+                market: {
+                    growth: {{ skill_analysis.domain_info.growth_potential }},
+                    competition: '{{ skill_analysis.domain_info.competition }}',
+                    openings: {{ skill_analysis.domain_info.avg_job_openings }},
+                    companies: {{ skill_analysis.domain_info.top_companies | tojson }}
+                },
+                timestamp: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `career-analysis-${Date.now()}.json`;
+            a.click();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerPath AI | Personalized Learning & Career Guidance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: var(--brand-primary);
+            --secondary: var(--brand-accent);
+            --accent: #ffd6e0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --gradient-primary: var(--brand-gradient-primary);
+            --gradient-secondary: var(--brand-gradient-accent);
+        }
+        
+        body {
+            background: var(--color-background);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: var(--gradient-primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .hero-section {
+            /* use peacock brand gradient and layer the hero image for a cohesive look */
+            background: var(--gradient-primary), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-blend-mode: overlay;
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 50px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 15px 20px;
+            font-weight: 600;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .progress {
+            height: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+        }
+        
+        .form-control, .form-select {
+            border-radius: 10px;
+            padding: 12px 15px;
+            border: 1px solid #e1e5ee;
+            margin-bottom: 15px;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .skill-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .roadmap-container {
+            position: relative;
+            padding: 30px 0;
+        }
+        
+        .roadmap-container:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .roadmap-phase {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            position: relative;
+            width: 45%;
+        }
+        
+        .roadmap-phase:nth-child(odd) {
+            margin-left: 0;
+            margin-right: auto;
+        }
+        
+        .roadmap-phase:nth-child(even) {
+            margin-left: auto;
+            margin-right: 0;
+        }
+        
+        .roadmap-phase:before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+        
+        .roadmap-phase:nth-child(odd):before {
+            right: -10px;
+        }
+        
+        .roadmap-phase:nth-child(even):before {
+            left: -10px;
+        }
+        
+        .course-card {
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .course-card:hover {
+            border-left-width: 8px;
+        }
+        
+        .price-tag {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .discount-badge {
+            background: var(--danger);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .value-score {
+            background: var(--success);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .analysis-history-item {
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .analysis-history-item:hover {
+            border-left-width: 8px;
+            padding-left: 11px;
+        }
+        
+        .budget-calculator {
+            background: var(--gradient-secondary);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+        }
+        
+        .budget-display {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+        
+        .skill-gap-indicator {
+            height: 8px;
+            border-radius: 4px;
+            background: #e9ecef;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .skill-gap-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: var(--gradient-primary);
+        }
+        
+        .email-confirmation {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .confirmation-icon {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .roadmap-container:before {
+                left: 20px;
+            }
+            
+            .roadmap-phase {
+                width: calc(100% - 60px);
+                margin-left: 40px !important;
+                margin-right: 0 !important;
+            }
+            
+            .roadmap-phase:before {
+                left: -30px !important;
+                right: auto !important;
+            }
+            
+            .hero-section {
+                padding: 60px 0;
+            }
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-compass me-2"></i>CareerPath AI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#analysis">Career Analysis</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#courses">Courses</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <button class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Find Your Perfect Career Path with AI</h1>
+                    <p class="lead mb-4">Get personalized career guidance based on your skills, interests, and goals. Our AI analyzes market trends to recommend the best learning paths and certifications for you.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <button class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#analysisModal">
+                            <i class="fas fa-chart-line me-2"></i>Start Career Analysis
+                        </button>
+                        <button class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#coursesModal">
+                            <i class="fas fa-book me-2"></i>Browse Courses
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Career Development" class="img-fluid rounded-3 shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Why Choose CareerPath AI?</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card text-center h-100">
+                        <div class="card-body p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h4 class="card-title">AI-Powered Analysis</h4>
+                            <p class="card-text">Our advanced AI analyzes your skills, grades, and interests to provide personalized career recommendations.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card text-center h-100">
+                        <div class="card-body p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-road"></i>
+                            </div>
+                            <h4 class="card-title">Personalized Roadmaps</h4>
+                            <p class="card-text">Get step-by-step learning paths tailored to your career goals and current skill level.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card text-center h-100">
+                        <div class="card-body p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h4 class="card-title">Market Trend Analysis</h4>
+                            <p class="card-text">Stay ahead with insights into emerging job markets and in-demand skills.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Career Analysis Section -->
+    <section id="analysis" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center">Career Path Analysis</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="mb-0">Complete Your Career Profile</h4>
+                        </div>
+                        <div class="card-body p-4">
+                            <form id="careerAnalysisForm">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="skills" class="form-label">Your Current Skills</label>
+                                            <input type="text" class="form-control" id="skills" placeholder="e.g., Python, JavaScript, Data Analysis">
+                                            <div class="form-text">Separate skills with commas</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="cgpa" class="form-label">CGPA / Academic Score</label>
+                                            <input type="number" class="form-control" id="cgpa" min="0" max="10" step="0.1" placeholder="e.g., 8.5">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="careerGoal" class="form-label">Desired Career Path</label>
+                                    <select class="form-select" id="careerGoal">
+                                        <option value="">Select your career goal</option>
+                                        <option value="data_science">Data Science & Analytics</option>
+                                        <option value="ai_engineering">AI & Machine Learning</option>
+                                        <option value="web_development">Full Stack Development</option>
+                                        <option value="cloud_computing">Cloud & DevOps</option>
+                                        <option value="cybersecurity">Cybersecurity</option>
+                                        <option value="mobile_development">Mobile App Development</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="budget" class="form-label">Learning Budget (₹)</label>
+                                    <input type="range" class="form-range" id="budget" min="0" max="20000" step="500" value="5000">
+                                    <div class="d-flex justify-content-between">
+                                        <span>₹0</span>
+                                        <span id="budgetValue">₹5000</span>
+                                        <span>₹20,000</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="experience" class="form-label">Current Experience Level</label>
+                                    <select class="form-select" id="experience">
+                                        <option value="beginner">Beginner (0-1 years)</option>
+                                        <option value="intermediate">Intermediate (1-3 years)</option>
+                                        <option value="advanced">Advanced (3+ years)</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-analytics me-2"></i>Analyze My Career Path
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section (Initially Hidden) -->
+    <section id="results" class="py-5" style="display: none;">
+        <div class="container">
+            <h2 class="section-title text-center">Your Career Analysis Results</h2>
+            
+            <!-- Skill Gap Analysis -->
+            <div class="row mb-5">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="mb-0">Skill Gap Analysis</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <h5>Career Goal: <span id="resultCareerGoal" class="text-primary">Data Science</span></h5>
+                                    <p class="mb-2">Match Score: <span id="matchScore" class="fw-bold">75%</span></p>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Readiness Level: <span id="readinessLevel" class="text-success">Medium</span></h5>
+                                    <p>Estimated Timeline: <span id="timeline" class="fw-bold">6-12 months</span></p>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Your Current Skills:</h6>
+                                    <div id="currentSkills" class="d-flex flex-wrap gap-2 mb-3">
+                                        <!-- Filled by JavaScript -->
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Skills You Need:</h6>
+                                    <div id="neededSkills" class="d-flex flex-wrap gap-2">
+                                        <!-- Filled by JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Learning Roadmap -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="mb-0">Personalized Learning Roadmap</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="roadmap-container">
+                                <div class="roadmap-phase">
+                                    <h5>Phase 1: Foundation (1-3 months)</h5>
+                                    <p class="text-muted">Build core fundamentals and establish a strong base</p>
+                                    <ul>
+                                        <li>Complete Python programming basics</li>
+                                        <li>Learn statistics and probability</li>
+                                        <li>Understand data analysis concepts</li>
+                                    </ul>
+                                    <div class="mt-3">
+                                        <span class="badge bg-primary">2 Courses</span>
+                                        <span class="badge bg-success">Estimated Cost: ₹2,500</span>
+                                    </div>
+                                </div>
+                                <div class="roadmap-phase">
+                                    <h5>Phase 2: Core Development (3-6 months)</h5>
+                                    <p class="text-muted">Develop professional skills and build projects</p>
+                                    <ul>
+                                        <li>Master machine learning algorithms</li>
+                                        <li>Learn SQL and database management</li>
+                                        <li>Build data visualization skills</li>
+                                    </ul>
+                                    <div class="mt-3">
+                                        <span class="badge bg-primary">3 Courses</span>
+                                        <span class="badge bg-success">Estimated Cost: ₹4,500</span>
+                                    </div>
+                                </div>
+                                <div class="roadmap-phase">
+                                    <h5>Phase 3: Advanced Specialization (6-12 months)</h5>
+                                    <p class="text-muted">Master advanced concepts and prepare for job market</p>
+                                    <ul>
+                                        <li>Deep learning and neural networks</li>
+                                        <li>Big data technologies</li>
+                                        <li>Capstone project and portfolio development</li>
+                                    </ul>
+                                    <div class="mt-3">
+                                        <span class="badge bg-primary">2 Courses</span>
+                                        <span class="badge bg-success">Estimated Cost: ₹5,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <div class="alert alert-info">
+                                    <h6>Total Estimated Cost: <span class="fw-bold">₹12,000</span></h6>
+                                    <p class="mb-0">This fits within your budget of <span id="budgetDisplay" class="fw-bold">₹5,000</span> with proper planning</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recommended Courses -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0">Recommended Courses</h4>
+                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#coursesModal">
+                                Compare All Courses
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" id="recommendedCourses">
+                                <!-- Course cards will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="text-center mt-5">
+                <button class="btn btn-primary btn-lg me-3" id="saveAnalysis">
+                    <i class="fas fa-save me-2"></i>Save Analysis
+                </button>
+                <button class="btn btn-outline-primary btn-lg me-3" id="emailResults">
+                    <i class="fas fa-envelope me-2"></i>Email Results
+                </button>
+                <button class="btn btn-outline-secondary btn-lg" id="newAnalysis">
+                    <i class="fas fa-redo me-2"></i>New Analysis
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Budget Calculator Section -->
+    <section id="budgetCalculator" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center">Learning Budget Calculator</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="budget-calculator">
+                        <h4 class="text-center mb-4">Plan Your Learning Investment</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="monthlyBudget" class="form-label">Monthly Learning Budget (₹)</label>
+                                    <input type="range" class="form-range" id="monthlyBudget" min="500" max="10000" step="500" value="2000">
+                                    <div class="d-flex justify-content-between text-white">
+                                        <span>₹500</span>
+                                        <span id="monthlyBudgetValue">₹2,000</span>
+                                        <span>₹10,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="timelineMonths" class="form-label">Learning Timeline (Months)</label>
+                                    <input type="range" class="form-range" id="timelineMonths" min="3" max="24" step="1" value="12">
+                                    <div class="d-flex justify-content-between text-white">
+                                        <span>3 months</span>
+                                        <span id="timelineValue">12 months</span>
+                                        <span>24 months</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <div class="budget-display">
+                                <span id="totalBudget">₹24,000</span>
+                            </div>
+                            <p class="mb-4">Total available for your learning journey</p>
+                            <button class="btn btn-light" id="applyBudget">
+                                <i class="fas fa-calculator me-2"></i>Apply to My Plan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analysis History Section -->
+    <section id="analysisHistory" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center">Your Analysis History</h2>
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0">Previous Career Analyses</h4>
+                            <span class="badge bg-primary">3 analyses</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="analysis-history-item">
+                                <div class="d-flex justify-content-between">
+                                    <h5>Data Science Career Path</h5>
+                                    <span class="text-muted">2 weeks ago</span>
+                                </div>
+                                <p class="mb-2">Match Score: <span class="fw-bold text-success">78%</span></p>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 78%"></div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <span class="badge bg-light text-dark">Python</span>
+                                    <span class="badge bg-light text-dark">Machine Learning</span>
+                                    <span class="badge bg-light text-dark">SQL</span>
+                                </div>
+                            </div>
+                            
+                            <div class="analysis-history-item">
+                                <div class="d-flex justify-content-between">
+                                    <h5>Full Stack Development</h5>
+                                    <span class="text-muted">1 month ago</span>
+                                </div>
+                                <p class="mb-2">Match Score: <span class="fw-bold text-warning">65%</span></p>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 65%"></div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <span class="badge bg-light text-dark">JavaScript</span>
+                                    <span class="badge bg-light text-dark">React</span>
+                                    <span class="badge bg-light text-dark">Node.js</span>
+                                </div>
+                            </div>
+                            
+                            <div class="analysis-history-item">
+                                <div class="d-flex justify-content-between">
+                                    <h5>Cloud Engineering</h5>
+                                    <span class="text-muted">2 months ago</span>
+                                </div>
+                                <p class="mb-2">Match Score: <span class="fw-bold text-danger">45%</span></p>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 45%"></div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <span class="badge bg-light text-dark">AWS</span>
+                                    <span class="badge bg-light text-dark">Docker</span>
+                                    <span class="badge bg-light text-dark">Linux</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5><i class="fas fa-compass me-2"></i>CareerPath AI</h5>
+                    <p>Your intelligent guide to career success. We help students and professionals find their ideal career paths through AI-powered analysis.</p>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light text-decoration-none">Home</a></li>
+                        <li><a href="#features" class="text-light text-decoration-none">Features</a></li>
+                        <li><a href="#analysis" class="text-light text-decoration-none">Career Analysis</a></li>
+                        <li><a href="#courses" class="text-light text-decoration-none">Courses</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i> support@careerpathai.com</li>
+                        <li><i class="fas fa-phone me-2"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> San Francisco, CA</li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Connect With Us</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-light"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-linkedin fa-lg"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center py-3">
+                <p class="mb-0">&copy; 2023 CareerPath AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Login to Your Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a href="#" class="text-decoration-none">Forgot your password?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal fade" id="signupModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="signupFirstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="signupFirstName" placeholder="John">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="signupLastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="signupLastName" placeholder="Doe">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="signupEmail" placeholder="name@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="signupPassword" placeholder="Create a password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupConfirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="signupConfirmPassword" placeholder="Confirm your password">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="acceptTerms">
+                            <label class="form-check-label" for="acceptTerms">I agree to the <a href="#" class="text-decoration-none">Terms and Conditions</a></label>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Create Account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Courses Modal -->
+    <div class="modal fade" id="coursesModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Course Comparison</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Platform</th>
+                                    <th>Rating</th>
+                                    <th>Duration</th>
+                                    <th>Price</th>
+                                    <th>Value Score</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Machine Learning Specialization</td>
+                                    <td>Coursera</td>
+                                    <td>
+                                        <span class="text-warning">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                            4.8
+                                        </span>
+                                    </td>
+                                    <td>3 months</td>
+                                    <td>
+                                        <span class="price-tag">₹3,999</span>
+                                        <span class="original-price text-muted ms-1">₹5,999</span>
+                                        <span class="discount-badge ms-1">33% off</span>
+                                    </td>
+                                    <td>
+                                        <div class="value-score">95</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Data Science Bootcamp</td>
+                                    <td>edX</td>
+                                    <td>
+                                        <span class="text-warning">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            4.6
+                                        </span>
+                                    </td>
+                                    <td>4 months</td>
+                                    <td>
+                                        <span class="price-tag">₹2,999</span>
+                                        <span class="original-price text-muted ms-1">₹4,499</span>
+                                        <span class="discount-badge ms-1">33% off</span>
+                                    </td>
+                                    <td>
+                                        <div class="value-score">88</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>AWS Cloud Practitioner</td>
+                                    <td>AWS Training</td>
+                                    <td>
+                                        <span class="text-warning">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                            4.7
+                                        </span>
+                                    </td>
+                                    <td>2 months</td>
+                                    <td>
+                                        <span class="price-tag">₹1,999</span>
+                                        <span class="original-price text-muted ms-1">₹2,999</span>
+                                        <span class="discount-badge ms-1">33% off</span>
+                                    </td>
+                                    <td>
+                                        <div class="value-score">92</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Full Stack Web Development</td>
+                                    <td>FreeCodeCamp</td>
+                                    <td>
+                                        <span class="text-warning">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            4.5
+                                        </span>
+                                    </td>
+                                    <td>6 months</td>
+                                    <td>
+                                        <span class="price-tag">Free</span>
+                                    </td>
+                                    <td>
+                                        <div class="value-score">100</div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Confirmation Modal -->
+    <div class="modal fade" id="emailConfirmationModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body p-5">
+                    <div class="email-confirmation">
+                        <div class="confirmation-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3 class="mb-3">Analysis Sent Successfully!</h3>
+                        <p class="mb-4">Your career path analysis has been sent to your email address. You can also access it anytime from your dashboard.</p>
+                        <button class="btn btn-primary" data-bs-dismiss="modal">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Budget slider update
+        document.getElementById('budget').addEventListener('input', function() {
+            document.getElementById('budgetValue').textContent = '₹' + this.value;
+        });
+        
+        // Monthly budget slider update
+        document.getElementById('monthlyBudget').addEventListener('input', function() {
+            document.getElementById('monthlyBudgetValue').textContent = '₹' + this.value.toLocaleString();
+            updateTotalBudget();
+        });
+        
+        // Timeline slider update
+        document.getElementById('timelineMonths').addEventListener('input', function() {
+            document.getElementById('timelineValue').textContent = this.value + ' months';
+            updateTotalBudget();
+        });
+        
+        // Calculate total budget
+        function updateTotalBudget() {
+            const monthlyBudget = parseInt(document.getElementById('monthlyBudget').value);
+            const timeline = parseInt(document.getElementById('timelineMonths').value);
+            const totalBudget = monthlyBudget * timeline;
+            document.getElementById('totalBudget').textContent = '₹' + totalBudget.toLocaleString();
+        }
+        
+        // Career analysis form submission
+        document.getElementById('careerAnalysisForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const skills = document.getElementById('skills').value;
+            const cgpa = document.getElementById('cgpa').value;
+            const careerGoal = document.getElementById('careerGoal').value;
+            const budget = document.getElementById('budget').value;
+            
+            // Validate form
+            if (!skills || !cgpa || !careerGoal) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Show results section
+            document.getElementById('results').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+            
+            // Update results with form data
+            document.getElementById('resultCareerGoal').textContent = document.getElementById('careerGoal').options[document.getElementById('careerGoal').selectedIndex].text;
+            document.getElementById('budgetDisplay').textContent = '₹' + budget;
+            
+            // Simulate skill gap analysis
+            simulateSkillGapAnalysis(skills, careerGoal, cgpa);
+            
+            // Simulate course recommendations
+            simulateCourseRecommendations(skills, budget);
+        });
+        
+        // Simulate skill gap analysis
+        function simulateSkillGapAnalysis(skills, careerGoal, cgpa) {
+            const skillList = skills.split(',').map(skill => skill.trim());
+            
+            // Clear previous skills
+            document.getElementById('currentSkills').innerHTML = '';
+            document.getElementById('neededSkills').innerHTML = '';
+            
+            // Add current skills
+            skillList.forEach(skill => {
+                if (skill) {
+                    const skillElement = document.createElement('span');
+                    skillElement.className = 'badge bg-primary';
+                    skillElement.textContent = skill;
+                    document.getElementById('currentSkills').appendChild(skillElement);
+                }
+            });
+            
+            // Determine needed skills based on career goal
+            let neededSkills = [];
+            if (careerGoal === 'data_science') {
+                neededSkills = ['Python', 'Statistics', 'SQL', 'Machine Learning', 'Data Visualization'];
+            } else if (careerGoal === 'ai_engineering') {
+                neededSkills = ['Python', 'TensorFlow', 'PyTorch', 'Deep Learning', 'Neural Networks'];
+            } else if (careerGoal === 'web_development') {
+                neededSkills = ['JavaScript', 'HTML/CSS', 'React', 'Node.js', 'Database Management'];
+            } else if (careerGoal === 'cloud_computing') {
+                neededSkills = ['AWS', 'Docker', 'Kubernetes', 'Linux', 'Networking'];
+            } else if (careerGoal === 'cybersecurity') {
+                neededSkills = ['Network Security', 'Ethical Hacking', 'Cryptography', 'Python', 'Linux'];
+            } else if (careerGoal === 'mobile_development') {
+                neededSkills = ['Java/Kotlin', 'Swift', 'React Native', 'Mobile UI/UX', 'API Integration'];
+            }
+            
+            // Add needed skills
+            neededSkills.forEach(skill => {
+                const skillElement = document.createElement('span');
+                skillElement.className = 'badge bg-light text-dark';
+                skillElement.textContent = skill;
+                document.getElementById('neededSkills').appendChild(skillElement);
+            });
+            
+            // Calculate match score based on CGPA and random factor
+            let baseScore = 50 + (Math.random() * 30);
+            if (cgpa >= 9) baseScore += 15;
+            else if (cgpa >= 8) baseScore += 10;
+            else if (cgpa >= 7) baseScore += 5;
+            
+            const matchScore = Math.min(95, Math.round(baseScore));
+            
+            // Update match score and progress bar
+            document.getElementById('matchScore').textContent = matchScore + '%';
+            document.querySelector('#results .progress-bar').style.width = matchScore + '%';
+            
+            // Update readiness level
+            let readinessLevel = 'Low';
+            let readinessClass = 'danger';
+            if (matchScore >= 80) {
+                readinessLevel = 'High';
+                readinessClass = 'success';
+            } else if (matchScore >= 60) {
+                readinessLevel = 'Medium';
+                readinessClass = 'warning';
+            }
+            
+            document.getElementById('readinessLevel').textContent = readinessLevel;
+            document.getElementById('readinessLevel').className = `text-${readinessClass}`;
+            document.querySelector('#results .progress-bar').className = `progress-bar bg-${readinessClass}`;
+            
+            // Update timeline
+            let timeline = '12-18 months';
+            if (matchScore >= 80) timeline = '3-6 months';
+            else if (matchScore >= 60) timeline = '6-12 months';
+            
+            document.getElementById('timeline').textContent = timeline;
+        }
+        
+        // Simulate course recommendations
+        function simulateCourseRecommendations(skills, budget) {
+            const coursesContainer = document.getElementById('recommendedCourses');
+            coursesContainer.innerHTML = '';
+            
+            // Sample course data
+            const courses = [
+                {
+                    title: 'Python for Data Science',
+                    platform: 'Coursera',
+                    rating: 4.5,
+                    duration: '2 months',
+                    price: 1799,
+                    originalPrice: 2599,
+                    discount: 31,
+                    valueScore: 87,
+                    skills: 'Python, Data Analysis, Pandas'
+                },
+                {
+                    title: 'Machine Learning Fundamentals',
+                    platform: 'edX',
+                    rating: 4.6,
+                    duration: '3 months',
+                    price: 2499,
+                    originalPrice: 3499,
+                    discount: 29,
+                    valueScore: 89,
+                    skills: 'Machine Learning, Python, Statistics'
+                },
+                {
+                    title: 'SQL for Data Analysis',
+                    platform: 'Udemy',
+                    rating: 4.4,
+                    duration: '1 month',
+                    price: 1299,
+                    originalPrice: 1999,
+                    discount: 35,
+                    valueScore: 85,
+                    skills: 'SQL, Database, Data Analysis'
+                }
+            ];
+            
+            // Create course cards
+            courses.forEach(course => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4 mb-4';
+                
+                col.innerHTML = `
+                    <div class="course-card card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">${course.title}</h5>
+                            <p class="card-text text-muted">${course.platform}</p>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-warning">
+                                    <i class="fas fa-star"></i> ${course.rating}
+                                </span>
+                                <span>${course.duration}</span>
+                            </div>
+                            <p class="card-text"><small>${course.skills}</small></p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div>
+                                    <span class="price-tag">₹${course.price}</span>
+                                    <span class="original-price text-muted ms-1">₹${course.originalPrice}</span>
+                                    <span class="discount-badge ms-1">${course.discount}% off</span>
+                                </div>
+                                <div class="value-score">${course.valueScore}</div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <button class="btn btn-sm btn-outline-primary w-100">View Course</button>
+                        </div>
+                    </div>
+                `;
+                
+                coursesContainer.appendChild(col);
+            });
+        }
+        
+        // Apply budget to plan
+        document.getElementById('applyBudget').addEventListener('click', function() {
+            const totalBudget = document.getElementById('totalBudget').textContent;
+            alert(`Budget of ${totalBudget} applied to your learning plan!`);
+        });
+        
+        // Save analysis
+        document.getElementById('saveAnalysis').addEventListener('click', function() {
+            alert('Your career analysis has been saved to your dashboard!');
+        });
+        
+        // Email results
+        document.getElementById('emailResults').addEventListener('click', function() {
+            const emailModal = new bootstrap.Modal(document.getElementById('emailConfirmationModal'));
+            emailModal.show();
+        });
+        
+        // New analysis
+        document.getElementById('newAnalysis').addEventListener('click', function() {
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('careerAnalysisForm').reset();
+            document.getElementById('budgetValue').textContent = '₹5000';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Initialize total budget
+        updateTotalBudget();
+    </script>
+</body>
+</html>
