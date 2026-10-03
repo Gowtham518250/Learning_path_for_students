@@ -218,7 +218,7 @@ async def analyze(body: AnalyzeIn,user=Depends(current_user)):
 async def upload_evidence(file: UploadFile=File(...),user=Depends(current_user)):
     suffix=Path(file.filename or "").suffix.lower(); raw=await file.read()
     if suffix==".pdf":
-        temp=Path(settings.database_url).parent/f"tmp_{uuid.uuid4()}.pdf"; temp.write_bytes(raw)
+        temp=Path.cwd()/f"tmp_{uuid.uuid4()}.pdf"; temp.write_bytes(raw)
         try: text="\n".join((p.extract_text() or "") for p in PdfReader(str(temp)).pages)
         finally: temp.unlink(missing_ok=True)
     else:
