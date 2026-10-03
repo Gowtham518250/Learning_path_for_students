@@ -42,6 +42,9 @@ class LoginIn(BaseModel):
     email: EmailStr
     password: str
 
+class EmailIn(BaseModel):
+    email: EmailStr
+
 class VerifyIn(BaseModel):
     token: str
 
@@ -124,7 +127,7 @@ async def verify_email(body: VerifyIn):
     return {"message":"Email verified successfully"}
 
 @app.post("/api/auth/resend-verification")
-async def resend_verification(body: LoginIn):
+async def resend_verification(body: EmailIn):
     user = fetch_one("SELECT * FROM users WHERE email=?",(body.email.lower().strip(),))
     if not user: return {"message":"If the account exists, a verification email will be sent."}
     if user["is_verified"]: return {"message":"Account is already verified."}
